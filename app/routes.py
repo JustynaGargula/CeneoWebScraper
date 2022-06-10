@@ -7,6 +7,7 @@ import os
 import pandas as pd
 import numpy as np
 from matplotlib import pyplot as plt
+from app.models.product import Product
 
 def get_item(ancestor, selector, attribute=None, return_list=False):
     try:
@@ -18,18 +19,7 @@ def get_item(ancestor, selector, attribute=None, return_list=False):
     except (AttributeError, TypeError):
         return None
 
-selectors = {
-    "author": ["span.user-post__author-name"],
-    "recommendation": ["span.user-post__author-recomendation > em"],
-    "stars": ["span.user-post__score-count"],
-    "content": ["div.user-post__text"],
-    "useful": ["button.vote-yes > span"],
-    "useless": ["button.vote-no > span"],
-    "publish_date": ["span.user-post__published > time:nth-child(1)", "datetime"],
-    "purchase_date": ["span.user-post__published > time:nth-child(2)", "datetime"],
-    "pros": ["div[class$=positives]~ div.review-feature__item", None, True],
-    "cons": ["div[class$=negatives]~ div.review-feature__item", None, True]
-}
+
 
 @app.route('/')
 #@app.route('/index')
@@ -41,6 +31,9 @@ def index(name="Hello World"):
 def extract():
     if request.method == "POST":
         product_id = request.form.get("product_id")
+        product = Product(product_id)
+        product.extract_product()
+
         url = f"https://www.ceneo.pl/{product_id}#tab=reviews"
         all_opinions = []
         while(url):
@@ -79,12 +72,7 @@ def author():
 def product(product_id):
     opinions = pd.read_json(f"app/opinions/{product_id}.json")
     opinions.stars = opinions.stars.map(lambda x: float(x.split("/")[0].replace(",", ".")))
-    stats = {
-        "opinions_count": len(opinions.index),
-        "pros_count": opinions.pros.map(bool).sum(),
-        "cons_count": opinions.cons.map(bool).sum(),
-        "average_score": opinions.stars.mean().round(2)
-    }
+
     recommendation = opinions.recommendation.value_counts(dropna = False).sort_index().reindex(["Nie polecam", "Polecam", None])
     recommendation.plot.pie(
         label="", 
