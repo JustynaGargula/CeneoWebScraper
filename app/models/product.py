@@ -1,7 +1,8 @@
-from bs4 import BeautifulSoup
+import requests
 import os
 import json
 import pandas as pd
+from bs4 import BeautifulSoup
 from app.utils import get_item
 from app.models.opinion import Opinion
 
@@ -14,26 +15,31 @@ class Product:
         self.pros_count = pros_count
         self.cons_count = cons_count
         self.average_score = average_score
-
+        return self
 
     def __str__(self):
-        pass
+        return f"Product: {self.product_id}, {self.opinions}, {self.product_name}, {self.opinions_count}, {self.pros_count}, {self.cons_count}, {self.average_score}"
     
     def __repr__(self):
-        pass
+        return f"Product: {self.product_id}, {self.opinions}, {self.product_name}, {self.opinions_count}, {self.pros_count}, {self.cons_count}, {self.average_score}"
 
     def to_dict(self):
-        pass
+        return{
+            "product_id" : self.product_id,
+            "opinions" : self.opinions,
+            "product_nam" : self.product_name,
+            "opinions_count" : self.opinions_count,
+            "pros_count" : self.pros_count,
+            "cons_count" : self.cons_count,
+            "average_score" : self.average_score
+        }
 
-
-
-    def extract_product():
-        url = f"https://www.ceneo.pl/{product_id}#tab=reviews"
+    def extract_product(self):
+        url = f"https://www.ceneo.pl/{self.product_id}#tab=reviews"
         response = requests.get(url)
         page = BeautifulSoup(response.text, 'html.parser')
         self.product_name = get_item(page, "h1.product-top__product-info__name")
 
-        all_opinions = []
         while(url):
             response = requests.get(url)
             page = BeautifulSoup(response.text, 'html.parser')
@@ -56,12 +62,12 @@ class Product:
     def save_opinions(self):
         if not os.path.exists("app/opinions"):
             os.makedirs("app/opinions")
-        with open(f"app/opinions/{product_id}.json", "w", encoding="UTF-8") as jf:
+        with open(f"app/opinions/{self.product_id}.json", "w", encoding="UTF-8") as jf:
             json.dump(self.opinions, jf, indent=4, ensure_ascii=False)
 
     def save_stats(self):
         if not os.path.exists("app/products"):
             os.makedirs("app/products")
-        with open(f"app/products/{product_id}.json", "w", encoding="UTF-8") as jf:
+        with open(f"app/products/{self.product_id}.json", "w", encoding="UTF-8") as jf:
             json.dump(self.opinions, jf, indent=4, ensure_ascii=False)
     
