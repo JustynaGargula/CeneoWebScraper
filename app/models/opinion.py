@@ -14,7 +14,7 @@ class Opinion:
         self.pros = pros
         self.cons = cons
         self.opinion_id = opinion_id
-        return self
+
     
     def __str__(self):
         return f"Opinion: {self.author}, {self.recommendation}, {self.stars}, {self.content}, {self.useful}, {self.useless}, {self.publish_date}, {self.purchase_date}, {self.pros}, {self.cons}, {self.opinion_id}"
