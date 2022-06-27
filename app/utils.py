@@ -8,3 +8,4 @@ def get_item(ancestor, selector, attribute=None, return_list=False):
         return ancestor.select_one(selector).get_text().strip()
     except (AttributeError, TypeError):
         return None
+        
