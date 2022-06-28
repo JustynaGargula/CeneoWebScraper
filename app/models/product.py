@@ -5,7 +5,6 @@ import pandas as pd
 import numpy as np
 from bs4 import BeautifulSoup
 from app.utils import get_item
-from app.parameters import selectors
 from app.models.opinion import Opinion
 from matplotlib import pyplot as plt
 
@@ -75,13 +74,15 @@ class Product:
         return opinions
     
     def process_stats(self):
-        self.opinions_count = self.opinions_do_df().shape[0],
-        self.pros_count = self.opinions_do_df().pros.map(bool).sum()
-        self.cons_count = self.opinions_do_df().cons.map(bool).sum()
-        self.average_score = self.opinions_do_df().stars.mean().round(2)
+        if not self.opinions_do_df().empty:
+            self.opinions_count = self.opinions_do_df().shape[0],
+            self.pros_count = int(self.opinions_do_df().pros.map(bool).sum())
+            self.cons_count = int(self.opinions_do_df().cons.map(bool).sum())
+            self.average_score = self.opinions_do_df().stars.mean().round(2)
         return self
 
     def draw_charts(self): 
+        self.save_stats()
         recommendation = self.opinions_do_df().recommendation.value_counts(dropna = False).sort_index().reindex(["Nie polecam", "Polecam", None])
         recommendation.plot.pie(
             label="", 
@@ -92,6 +93,7 @@ class Product:
         plt.title("Rekomendacja")
         plt.savefig(f"app/static/plots/{self.product_id}_recommendations.png")
         plt.close()
+        
         stars = self.opinions_do_df().stars.value_counts().sort_index().reindex(list(np.arange(0,5.5,0.5)), fill_value=0)
         stars.plot.bar()
         plt.title("Oceny produktu")

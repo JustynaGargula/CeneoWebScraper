@@ -32,9 +32,9 @@ class Opinion:
             "useless" : self.useless,
             "publish_date" : self.publish_date,
             "purchase_date" : self.purchase_date,
-            "self.pros" : self.pros,
-            "self.cons" : self.cons,
-            "self.opinion_id" : self.opinion_id
+            "pros" : self.pros,
+            "cons" : self.cons,
+            "opinion_id" : self.opinion_id
         }
 
     def extract_opinion(self, opinion):
