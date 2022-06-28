@@ -91,6 +91,8 @@ class Product:
             labels=["Nie polecam", "Polecam", "Nie mam zdania"]
         )
         plt.title("Rekomendacja")
+        if not os.path.exists("app/static/plots"):
+            os.makedirs("app/static/plots")
         plt.savefig(f"app/static/plots/{self.product_id}_recommendations.png")
         plt.close()
         

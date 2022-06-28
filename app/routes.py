@@ -1,21 +1,25 @@
 from app import app
-from flask import render_template, redirect, url_for, request
+from flask import render_template, redirect, url_for, request,flash
 import os
 from app.models.product import Product
 
+
 @app.route('/')
 def index():
-    return render_template("index.html.jinja")
+    return render_template("index.html.jinja", text="Witaj w aplikacji pobierającej opinie ze strony Ceneo.pl")
 
 @app.route('/extract', methods=["POST", "GET"])
 def extract():
     if request.method == "POST":
         product_id = request.form.get("product_id")
         product = Product(product_id)
-        product.extract_product().process_stats().draw_charts()
-        
-        product.save_opinions()
-        return redirect(url_for("product", product_id=product_id))
+        try:
+            product.extract_product().process_stats().draw_charts()
+            product.save_opinions()
+            return redirect(url_for("product", product_id=product_id))
+        except:
+            flash("TU błąd")
+            return redirect("/extract")
     else:
         return render_template("extract.html.jinja")
 
@@ -34,6 +38,4 @@ def product(product_id):
     product.read_from_json()
     opinions = product.opinions_do_df()
     stats = product.stats_to_dict()
-    # if not os.path.exists("app/static/plots"):
-    #     os.makedirs("app/static/plots")
     return render_template("product.html.jinja", stats=stats, product_id=product_id, opinions=opinions)
