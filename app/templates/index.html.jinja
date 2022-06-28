@@ -1,4 +1,40 @@
 {% extends "base.html.jinja" %}
 {% block content %}
-    <p>{{text}}</p>
+    <h1>Cel aplikacji</h1>
+        <p>
+            Witaj na stronie pobierającej opinie ze strony Ceneo.pl. 
+            Dzięki niej możesz zobaczyć statystyki aktualnie poszukiwanego produktu, a także te dotyczące wcześniejszych wyszukiwań.
+            Statystyki obejmują następujące informacje o produkcie: kod produktu, nazwę produktu, liczbę opinii, liczbę zalet, 
+            liczbę wad, średnią ocenę. Oprócz tego strona wyświetla wykres kołowy przedstawiający rozkład rekomendacji (procent pozywtywnych, 
+            negatywnych, nieokreślonych opinii) oraz wykres kolumnowy pokazujący rozkład oceny produktu ze względu na liczbę osób, 
+            która wystawiła daną liczbę gwiazdek.
+        </p>
+    <h1>Opis działania aplikacji</h1>
+        <p>
+            Gdy użytkownik wpisze kod produktu w ramkę w zakładce "Pobierz produkt", aplikacja (po sprawdzeniu poprawności kodu produktu)
+            pobiera z serwisu Ceneo.pl wszystkie opinie o danym produkcie i zapisuje je do pliku json. Nasępnie przetwarza te dane (wylicza 
+            średnią ocenę, liczbę ocen pozytywnych i inne), zapisuje do innego pliku json i tworzy wykresy.
+            Gdy użytkownik wejdzie w zakładkę "Lista produktów", zobaczy listę wszystkich wcześniej wyszukanych produktów. 
+            Po kliknięciu wybranego produktu, wyświetlą się statystyki tego produktu.       
+        </p>
+    <h1>Zastosowane biblioteki</h1>
+        <p>
+        <ul>
+            <li>requests</li>
+            <li>os</li>
+            <li>json</li>
+            <li>pandas</li>
+            <li>numpy</li>
+            <li>beautiflisoup</li>
+            <li>flask</li>
+        </ul>
+        </p>
+    <h1>Zastosowane podejścia</h1>
+        <p>
+
+        </p>
+
+    
+    
+    
 {% endblock %}

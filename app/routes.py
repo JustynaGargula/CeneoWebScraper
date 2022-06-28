@@ -6,7 +6,8 @@ from app.models.product import Product
 
 @app.route('/')
 def index():
-    return render_template("index.html.jinja", text="Witaj w aplikacji pobierającej opinie ze strony Ceneo.pl")
+
+    return render_template("index.html.jinja")
 
 @app.route('/extract', methods=["POST", "GET"])
 def extract():
@@ -18,7 +19,7 @@ def extract():
             product.save_opinions()
             return redirect(url_for("product", product_id=product_id))
         except:
-            flash("TU błąd")
+            flash("Nieprawidłowy kod produktu")
             return redirect("/extract")
     else:
         return render_template("extract.html.jinja")
