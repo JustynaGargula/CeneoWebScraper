@@ -2,7 +2,9 @@ from app import app
 from flask import render_template, redirect, url_for, request,flash
 import os
 from app.models.product import Product
+import matplotlib.pyplot as plt
 
+plt.switch_backend('agg')           #pozwala ładować wielokrotnie pobierz_produkt
 
 @app.route('/')
 def index():
@@ -26,7 +28,6 @@ def extract():
 
 @app.route('/products')
 def products():
-    # products = [filename.split(".")[0] for filename in os.listdir("app/opinions")]
     products = []
     for filename in os.listdir("app/opinions"):
         element = []
@@ -38,11 +39,13 @@ def products():
         element.append(stats)
         
         products.append(element)
-    return render_template("products.html.jinja", products=products)
+    json_file = url_for('products', filename="{{product[0]}}.json")
+    return render_template("products.html.jinja", products=products, json_file=json_file)
 
 @app.route('/author')
 def author():
-    return render_template("author.html.jinja")
+    image_file = url_for('static', filename="plots/vinyl.jpg")
+    return render_template("author.html.jinja", image_file=image_file)
 
 @app.route('/product/<product_id>')
 def product(product_id):
