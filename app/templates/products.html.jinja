@@ -1,5 +1,6 @@
 {% extends "base.html.jinja" %}
 {% block content %}
+
     <h2>Lista produktów</h2>
     <ul class="list-group">
         {% for product in products %}
@@ -8,13 +9,13 @@
                 {{product[0]}}</a>
                 {% for key, value in product[1].items()%}
                     {% if key!="product_id" and key!="product_name" %}
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <li class="list-group-item d-flex justify-content-between align-items-center ml-5">
                             {{key}}
                             <span class="badge bg-primary rounded-pill">{{value}}</span>
                         </li>
                     {% endif %}
                 {% endfor %}                   
-                <button type="button" class="btn btn-dark">
+                <button type="button" class="btn btn-dark ml-5">
                     <a href="{{ json_file }}" download><i class="bi bi-download">
                     Pobierz plik json</i>
                     </a>
