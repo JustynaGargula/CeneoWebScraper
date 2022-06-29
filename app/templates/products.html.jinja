@@ -5,7 +5,7 @@
         {% for product in products %}
             <li class="list-group-item d-flex justify-content-between align-items-center">
                 <a class="nav-link" href="{{url_for('product', product_id=product[0])}}"><i class="bi bi-door-open-fill"></i>
- {{product[0]}}</a>
+                {{product[0]}}</a>
                 {% for key, value in product[1].items()%}
                     {% if key!="product_id" and key!="product_name" %}
                         <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -13,14 +13,16 @@
                             <span class="badge bg-primary rounded-pill">{{value}}</span>
                         </li>
                     {% endif %}
-                {% endfor %}
-
-                    <a href="../opinions/{{product[0]}}.json" download>
-                        <button type="button" class="btn btn-dark">Pobierz plik json
-                        </button>
+                {% endfor %}                   
+                <button type="button" class="btn btn-dark">
+                    <a href="/opinions/{{product[0]}}.json" download><i class="bi bi-download">
+                    Pobierz plik json</i>
                     </a>
+                </button>                  
 
-                <span class="badge bg-primary rounded-pill">{{loop.index}}</span>
+                <!--<span class="badge bg-primary rounded-pill">
+                {{loop.index}}
+                </span>-->
             </li>
         {% endfor %}
     </ul>

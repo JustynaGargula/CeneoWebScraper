@@ -8,6 +8,58 @@
         </li>
     {% endfor %}
     </ul>
+
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th>author</th>
+                <th>recommendation</th>
+                <th>stars</th>
+                <th>content</th>
+                <th>useful</th>
+                <th>useless</th>
+                <th>publish_date</th>
+                <th>purchase_date</th>
+                <th>pros</th>
+                <th>cons</th>
+                <th>opinion_id</th>        
+            </tr>
+        </thead>
+        <tbody>
+            
+            {% for key, value in opinions.iterrows() %}
+            <tr>
+                {% for element in value %}
+                    {% if element==[] or element=='' %}
+                        <td>-</td>
+                    {% elif element is iterable and element is not string %}
+                        <td><ul>
+                        {% for list_item in element %}
+                            <li>{{list_item}}</li>
+                        {% endfor %}
+                        </ul></td>
+                    {% else %}
+                        <td>{{element}}</td>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+            {% endfor %}
+            
+        </tbody>
+    </table>
+    
+
+
+        <!--{% for row in opinions %}
+            <tr>
+            {% for element in row %}
+                <td>{{element}}</td>
+            {% endfor %}
+            </tr>
+        {% endfor %}-->
+
+    </div>
+
     <div class="container">
         <div class="row">
             <div class="col">
