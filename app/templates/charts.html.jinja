@@ -1,0 +1,24 @@
+{% extends "base.html.jinja" %}
+{% block content %}
+    <h1>Wykresy produktu o kodzie {{product_id}}</h1>
+    
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <img src="/static/plots/{{product_id}}_recommendations.png" class="rounded mx-auto d-block" alt="Recommendation">
+            </div>
+            <div class="col">
+                <img src="/static/plots/{{product_id}}_stars.png" class="rounded mx-auto d-block" alt="Stars">
+            </div>
+        </div>
+    </div>
+
+    <button type="button" class="btn btn-dark" onclick="RedirectFunction()">Powrót do strony produktu
+    <i class="bi bi-arrow-bar-left"></i></button>
+    <script>
+        function RedirectFunction() {
+            window.location.assign("http://127.0.0.1:5000/product/{{product_id}}");   
+        }
+    </script>
+
+{% endblock %}

@@ -8,6 +8,18 @@
         </li>
     {% endfor %}
     </ul>
+<!--
+    <div class="mb-3">
+        <input type="submit" class="btn btn-info mb-3" value="Wykresy">
+    </div>
+    -->
+    <button type="button" class="btn btn-dark" onclick="RedirectFunction()">Wykresy <i class="bi bi-arrow-bar-right"></i></button>
+
+    <script>
+        function RedirectFunction() {
+            window.location.assign("http://127.0.0.1:5000/charts/{{product_id}}");   
+        }
+    </script>
 
     <table class="table table-striped table-bordered">
         <thead class="table-primary">
@@ -30,7 +42,7 @@
             {% for key, value in opinions.iterrows() %}
             <tr>
                 {% for element in value %}
-                    {% if element==[] or element=='' %}
+                    {% if element==[] or element=='' or element==None %}
                         <td>-</td>
                     {% elif element is iterable and element is not string %}
                         <td><ul>
@@ -48,16 +60,5 @@
         </tbody>
     </table>
 
-    </div>
 
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <img src="/static/plots/{{product_id}}_recommendations.png" class="rounded mx-auto d-block" alt="Recommendation">
-            </div>
-            <div class="col">
-                <img src="/static/plots/{{product_id}}_stars.png" class="rounded mx-auto d-block" alt="Stars">
-            </div>
-        </div>
-    </div>
 {% endblock %}

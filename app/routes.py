@@ -54,3 +54,10 @@ def product(product_id):
     opinions = product.opinions_do_df()
     stats = product.stats_to_dict()
     return render_template("product.html.jinja", stats=stats, product_id=product_id, opinions=opinions, product=product)
+
+@app.route('/charts/<product_id>')
+def charts(product_id):
+    product = Product(product_id)
+    product.read_from_json()
+    stats = product.stats_to_dict()
+    return render_template("charts.html.jinja", product_id=product_id, stats=stats)
