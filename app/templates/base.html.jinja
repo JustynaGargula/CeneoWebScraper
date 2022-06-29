@@ -34,7 +34,8 @@
                 </div>
             </div>
         </nav>
-        <div class="container">
+
+        <div class="container mb-5">
             <div class="row">
                 <div class="col-3">
 
@@ -47,12 +48,14 @@
                         {{ message }}
                     </div>
                 {% endfor %}
+
                 {% block content %}
                     <p>base.html.jinja</p>
                 {% endblock content %}
                 </div>
             </div>
         </div>
+
         <footer class="container bg-dark text-secondary fixed-bottom text-center">
             <p>&copy; Justyna Gargula Uniwersytet Ekonomiczny w Krakowie</p>
         </footer>

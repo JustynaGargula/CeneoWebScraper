@@ -26,7 +26,18 @@ def extract():
 
 @app.route('/products')
 def products():
-    products = [filename.split(".")[0] for filename in os.listdir("app/opinions")]
+    # products = [filename.split(".")[0] for filename in os.listdir("app/opinions")]
+    products = []
+    for filename in os.listdir("app/opinions"):
+        element = []
+        element.append(filename.split(".")[0])
+        
+        product = Product(element[0])
+        product.read_from_json()
+        stats = product.stats_to_dict()
+        element.append(stats)
+        
+        products.append(element)
     return render_template("products.html.jinja", products=products)
 
 @app.route('/author')

@@ -4,8 +4,22 @@
     <ul class="list-group">
         {% for product in products %}
             <li class="list-group-item d-flex justify-content-between align-items-center">
-                <a class="nav-link" href="{{url_for('product', product_id=product)}}"><i class="bi bi-door-open-fill"></i>
- {{product}}</a>
+                <a class="nav-link" href="{{url_for('product', product_id=product[0])}}"><i class="bi bi-door-open-fill"></i>
+ {{product[0]}}</a>
+                {% for key, value in product[1].items()%}
+                    {% if key!="product_id" and key!="product_name" %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            {{key}}
+                            <span class="badge bg-primary rounded-pill">{{value}}</span>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+
+                    <a href="../opinions/{{product[0]}}.json" download>
+                        <button type="button" class="btn btn-dark">Pobierz plik json
+                        </button>
+                    </a>
+
                 <span class="badge bg-primary rounded-pill">{{loop.index}}</span>
             </li>
         {% endfor %}
