@@ -75,7 +75,7 @@ class Product:
     
     def process_stats(self):
         if not self.opinions_do_df().empty:
-            self.opinions_count = self.opinions_do_df().shape[0],
+            self.opinions_count = int(self.opinions_do_df().shape[0],)
             self.pros_count = int(self.opinions_do_df().pros.map(bool).sum())
             self.cons_count = int(self.opinions_do_df().cons.map(bool).sum())
             self.average_score = self.opinions_do_df().stars.mean().round(2)
